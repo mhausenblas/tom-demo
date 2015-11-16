@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: grep-rc
+spec:
+  replicas: 1
+  selector:
+      name: shell-grep
+  template:
+    metadata:
+      labels:
+        name: shell-grep
+    spec:
+      containers:
+      - image: python:2.7
+        name: grep
+        ports:
+          - containerPort: 8000
+        command:
+          - /bin/sh
+          - -c
+          - "mkdir grepout ; curl -s 10.0.3.14:1028 | grep \">s\" > grepout/index.html ; cd grepout ; python -m SimpleHTTPServer"
