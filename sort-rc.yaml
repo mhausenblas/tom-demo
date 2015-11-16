@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: ls-rc
+  name: sort-rc
 spec:
   replicas: 1
   selector:
-      name: shell-ls
+      name: shell-sort
   template:
     metadata:
       labels:
-        name: shell-ls
+        name: shell-sort
     spec:
       containers:
       - image: python:2.7
@@ -19,4 +19,4 @@ spec:
         command:
           - /bin/sh
           - -c
-          - "python -m SimpleHTTPServer"
+          - "mkdir sortout ; curl -s 10.0.3.13:1025 | sort -r > sortout/index.html ; cd sortout ; python -m SimpleHTTPServer"
